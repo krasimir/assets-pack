@@ -9,7 +9,9 @@
   "dependencies": { 
     "watchr": "latest",
     "buildify": "latest",
-    "optimist": "latest"
+    "optimist": "latest",
+    "glob": "latest",
+    "less": "latest"
   },
   "keywords": [
     "watching",

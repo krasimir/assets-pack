@@ -1,0 +1,18 @@
+[
+    {
+        "type": "css",
+        "source": "tests/data/css",
+        "destination": "tests/packed/styles.css"
+    },
+    {
+        "type": "js",
+        "source": "tests/data/js",
+        "destination": "tests/packed/myjslib.js"
+    },
+    {
+        "type": "less",
+        "source": "tests/data/less/",
+        "index": "tests/data/less/index.less",
+        "destination": "tests/packed/styles.less.css"
+    }
+]
