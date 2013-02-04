@@ -3,7 +3,6 @@
 var path = require('path');
 var argv = require('optimist').argv;
 var buildify = require('buildify');
-var glob = require("glob");
 var less = require("less");
 var fs = require("fs");
 
