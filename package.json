@@ -10,7 +10,6 @@
     "watchr": "latest",
     "buildify": "latest",
     "optimist": "latest",
-    "glob": "latest",
     "less": "latest",
     "shelljs": "latest"
   },
