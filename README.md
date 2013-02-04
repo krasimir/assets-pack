@@ -9,6 +9,7 @@ The module is meant to be used in development mode. I.e. it is not a tool that y
 - watches for changes
 - perform packing/compilation of css, less and javascript
 - minify the output if necessary
+- execute shell command after packing
 
 ## Installation
 
