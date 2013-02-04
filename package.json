@@ -1,6 +1,6 @@
 {
   "name": "assetspack",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "homepage": "https://github.com/krasimir/assets-pack",
   "description": "clever assets packagement",
   "main": "index.js",
@@ -11,7 +11,8 @@
     "buildify": "latest",
     "optimist": "latest",
     "glob": "latest",
-    "less": "latest"
+    "less": "latest",
+    "shelljs": "latest"
   },
   "keywords": [
     "watching",

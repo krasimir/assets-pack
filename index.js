@@ -7,6 +7,8 @@ var glob = require("glob");
 var less = require("less");
 var fs = require("fs");
 
+require('shelljs/global');
+
 module.exports = function(config, onReadyCallback, onPackCallback) {
 
     var self = this;
@@ -32,6 +34,8 @@ module.exports = function(config, onReadyCallback, onPackCallback) {
             var watch = {
                 path: pathToWatch,
                 listener: function(eventName, filePath, fileCurrentStat, filePreviousStat) { 
+
+                    // less compilation
                     if(asset.type == "less") {
                         var lessConfig = {}
                         fs.readFile(process.cwd() + "/" + asset.index, 'utf8', function(err, indexless) {
@@ -57,9 +61,12 @@ module.exports = function(config, onReadyCallback, onPackCallback) {
                                 }
                                 fs.writeFileSync(process.cwd() + "/" + asset.destination, result, 'utf8');
                                 console.log(process.cwd() + "/" + asset.destination);
+                                if (asset.hook) exec(asset.hook);
                                 if (callbacks.onPack) callbacks.onPack(asset);
                             });
                         });
+
+                    // css and javascript packing
                     } else {           
                         glob(pathToWatch + "/**/*." + asset.type, function (er, files) {
                             var filesToConcat = [];
@@ -94,6 +101,7 @@ module.exports = function(config, onReadyCallback, onPackCallback) {
                                     b.save(destinationFile);
                                 }
                             }
+                            if (asset.hook) exec(asset.hook);
                             if (callbacks.onPack) callbacks.onPack(asset);
                         });
                     }

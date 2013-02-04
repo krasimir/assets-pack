@@ -51,6 +51,7 @@ The configuration is an array of objects. The object's properties are:
 - index /required/ /used only if type=less/ - your main less file
 - minify /optional/ - if set to true the the css/js code is minified
 - exclude /optional/ - array of files, which you don't want to be included (useful for css and javascript packing)
+- hook /optional/ - a shell command for execution after packing
 
 Example:
 

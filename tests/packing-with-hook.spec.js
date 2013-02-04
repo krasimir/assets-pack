@@ -4,8 +4,8 @@ var config = [
     {
         type: "js",
         source: "tests/data/js",
-        destination: "tests/packed/myjslib2.js",
-        exclude: ["B.js", "C.js"]
+        destination: "tests/packed/myjslib.js",
+        hook: "node -v && node -v > tests/packed/version.txt"
     }
 ]
 var pack;
@@ -20,17 +20,12 @@ describe("Testing javascript packagement", function() {
             done();
         });
     })
-    it("should compile the javascript with exclude", function(done) {
+    it("should compile the javascript", function(done) {
         pack.onPack(function(asset) {
             var fs = require('fs');
-            fs.exists(__dirname + "/../" + config[0].destination, function(exists) {
+            fs.exists(__dirname + "/../tests/packed/version.txt", function(exists) {
               if (exists) {
-                fs.readFile(__dirname + "/../" + config[0].destination, 'utf8', function(err, code) {
-                    expect(code).not.toContain("C =");
-                    expect(code).not.toContain("B =");
-                    expect(code).toContain("A =");
-                    done();
-                });
+                done();
               }
             });
         });
