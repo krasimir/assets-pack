@@ -1,0 +1,29 @@
+{
+  "name": "assetspack",
+  "version": "0.0.1",
+  "homepage": "https://github.com/krasimir/assets-pack",
+  "description": "clever assets packagement",
+  "main": "index.js",
+  "author": "Krasimir Tsonev",
+  "license": "BSD",
+  "dependencies": { 
+    "watchr": "latest",
+    "buildify": "latest",
+    "optimist": "latest"
+  },
+  "keywords": [
+    "watching",
+    "watch",
+    "fswatcher",
+    "watchfile",
+    "fs",
+    "less",
+    "compilation",
+    "uglify",
+    "javascript"
+  ],
+  "repository" : {
+    "type": "git",
+    "url": "https://github.com/krasimir/assets-pack.git"
+  }
+}
