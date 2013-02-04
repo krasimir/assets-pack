@@ -1,6 +1,6 @@
 {
   "name": "assetspack",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "homepage": "https://github.com/krasimir/assets-pack",
   "description": "clever assets packagement",
   "main": "index.js",
@@ -27,5 +27,8 @@
   "repository" : {
     "type": "git",
     "url": "https://github.com/krasimir/assets-pack.git"
+  },
+  "bin": {
+    "assetspack": "./index.js"
   }
 }

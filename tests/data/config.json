@@ -7,7 +7,8 @@
     {
         "type": "js",
         "source": "tests/data/js",
-        "destination": "tests/packed/myjslib.js"
+        "destination": "tests/packed/myjslib.js",
+        "minify": true
     },
     {
         "type": "less",

@@ -9,6 +9,7 @@ var fs = require("fs");
 
 module.exports = function(config, onReadyCallback, onPackCallback) {
 
+    var self = this;
     var callbacks = {
         onReady: onReadyCallback,
         onPack: onPackCallback
@@ -19,6 +20,7 @@ module.exports = function(config, onReadyCallback, onPackCallback) {
     }
     var onPack = function(callback) {
         callbacks.onPack = callback;
+        return self;
     }
 
     if(typeof config.length === "undefined" || config.length === 0) throw new Error("Wrong configuration. Should be an array of objects.");
