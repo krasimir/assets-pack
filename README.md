@@ -7,7 +7,7 @@ The module is meant to be used in development mode. I.e. it is not a tool that y
 ## Features
 
 - watches for changes
-- perform compilation of css, less and javascript
+- perform packing/compilation of css, less and javascript
 - minify the output if necessary
 
 ## Installation
@@ -49,7 +49,8 @@ The configuration is an array of objects. The object's properties are:
 - source /required/ - directory for watching
 - destination /required/ - file, which will contain the output of the packing
 - index /required/ /used only if type=less/ - your main less file
-- minify /optional/ - if set to true the the css/js code is minified  
+- minify /optional/ - if set to true the the css/js code is minified
+- exclude /optional/ - array of files, which you don't want to be included (useful for css and javascript packing)
 
 Example:
 
@@ -63,7 +64,8 @@ Example:
             "type": "js",
             "source": "tests/data/js",
             "destination": "tests/packed/myjslib.js",
-            "minify": true
+            "minify": true,
+            "exclude": ["B.js", "C.js"]
         },
         {
             "type": "less",

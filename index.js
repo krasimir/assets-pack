@@ -64,7 +64,15 @@ module.exports = function(config, onReadyCallback, onPackCallback) {
                         glob(pathToWatch + "/**/*." + asset.type, function (er, files) {
                             var filesToConcat = [];
                             for(var j=0; j<files.length; j++) {
-                                filesToConcat.push(files[j].replace(pathToWatch + "/", ""));
+                                var add = true;
+                                if(asset.exclude) {
+                                    for(var n=0; n<asset.exclude.length; n++) {
+                                        if(path.basename(files[j]) == asset.exclude[n]) {
+                                            add = false;
+                                        }
+                                    }
+                                }
+                                if(add) filesToConcat.push(files[j].replace(pathToWatch + "/", ""));
                             }
                             var b = buildify(pathToWatch)
                             .concat(filesToConcat)
