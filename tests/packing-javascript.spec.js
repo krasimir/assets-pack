@@ -3,7 +3,7 @@ var fs = require('fs');
 var config = [
     {
         type: "js",
-        source: "tests/data/js",
+        source: "tests/data/js/",
         destination: "tests/packed/myjslib.js"
     }
 ]

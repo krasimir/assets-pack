@@ -47,7 +47,7 @@ or
 The configuration is an array of objects. The object's properties are:
 
 - type /required/ - css, less or js
-- source /required/ - directory for watching (notice that there is no */* at the beginning and at the end of the path)
+- source /required/ - directory for watching
 - destination /required/ - file, which will contain the output of the packing (notice that there is no */* at the beginning of the path)
 - index /required/ /used only if type=less/ - your main less file
 - minify /optional/ - if set to true the the css/js code is minified
