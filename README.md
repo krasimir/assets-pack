@@ -76,3 +76,10 @@ Example:
             "destination": "tests/packed/styles.less.css"
         }
     ]
+    
+## TODO
+
+1. Avoid passing of *--config* parameter (default assetpack.json file in the directory)
+2. Allow packing any kind of files format
+3. Allow packing specific files
+4. Allow packing specific directories
