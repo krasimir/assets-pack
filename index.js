@@ -59,6 +59,7 @@ module.exports = function(config, onReadyCallback, onPackCallback) {
         // css and javascript packing
         } else {
             walk(pathToWatch, function(err, files) {
+                files.sort();
                 var filesToConcat = [];
                 for(var j=0; j<files.length; j++) {
                     var add = true;
