@@ -16,13 +16,6 @@ module.exports = function(config, onReadyCallback, onPackCallback) {
         onPack: onPackCallback
     };
 
-    var onReady = function(callback) {
-        callbacks.onReady = callback;
-    }
-    var onPack = function(callback) {
-        callbacks.onPack = callback;
-        return self;
-    }
     var pack = function(asset, pathToWatch, destinationFile) {
 
         // less compilation
@@ -99,54 +92,43 @@ module.exports = function(config, onReadyCallback, onPackCallback) {
                 if (callbacks.onPack) callbacks.onPack(asset);
             });
         }
+    } 
+
+    var numOfAssets = 0;
+    var numOfReadyAssets = 0;
+    var assetWatchingStarted = function() {
+        numOfReadyAssets += 1;
+        if(numOfReadyAssets == numOfAssets) {
+            if(callbacks.onReady) callbacks.onReady();
+        }
     }
-    var walk = function(dir, done) {
-        var results = [];
-        fs.readdir(dir, function(err, list) {
-            if (err) return done(err);
-            var pending = list.length;
-            if (!pending) return done(null, results);
-            list.forEach(function(file) {
-                file = dir + '/' + file;
-                fs.stat(file, function(err, stat) {
-                    if (stat && stat.isDirectory()) {
-                        walk(file, function(err, res) {
-                            results = results.concat(res);
-                            if (!--pending) done(null, results);
-                        });
-                    } else {
-                        results.push(file);
-                        if (!--pending) done(null, results);
-                    }
-                });
-            });
-        });
-    };
 
     if(typeof config.length === "undefined" || config.length === 0) throw new Error("Wrong configuration. Should be an array of objects.");
-    for(var i=0; i<config.length; i++) {
+    numOfAssets = config.length;
+    for(var i=0; i<numOfAssets; i++) {
         var asset = config[i];
         (function(asset) {
-            var pathToWatch = path.normalize(process.cwd() + "/" + asset.source);
-            var destinationFile = asset.destination;
-            var watch = {
-                path: pathToWatch,
-                listener: function(eventName, filePath, fileCurrentStat, filePreviousStat) { 
-                    pack(asset, pathToWatch, destinationFile);
-                },
-                next: function(err, watcher){
-                    if (err)  throw err;
-                    if (callbacks.onReady) callbacks.onReady(asset);
-                    console.log('watching in ' + pathToWatch);
-                }
-            };
-            require('watchr').watch(watch);
+            var somethingChange = function() {
+                require("./lib/walk")(asset.pack || asset.watch, asset.type, function(files) {
+                    require("./lib/pack")().packit(asset, files, function(file) {
+                        if(callbacks.onPack) callbacks.onPack(file);
+                    });
+                }, asset.exclude || []);
+            }
+            require("./lib/watch")(asset.watch, somethingChange, assetWatchingStarted);
+            somethingChange();
         })(asset);
     }
 
     return {
-        onReady: onReady,
-        onPack: onPack
+        onReady: function(callback) {
+            callbacks.onReady = callback;
+            return self;
+        },
+        onPack: function(callback) {
+            callbacks.onPack = callback;
+            return self;
+        }
     }
 
 }

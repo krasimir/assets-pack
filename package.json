@@ -8,10 +8,11 @@
   "license": "BSD",
   "dependencies": { 
     "watchr": "latest",
-    "buildify": "latest",
     "optimist": "latest",
     "less": "latest",
-    "shelljs": "latest"
+    "shelljs": "latest",
+    "underscore": "latest",
+    "clean-css": "latest"
   },
   "keywords": [
     "watching",

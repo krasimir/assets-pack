@@ -3,13 +3,16 @@ var fs = require('fs');
 var config = [
     {
         type: "css",
-        source: "tests/data/css",
-        destination: "tests/packed/styles.css"
+        watch: ["tests/data/css", "tests/data/css2"],
+        pack: ["tests/data/css", "tests/data/css2"],
+        output: "tests/packed/styles.css",
+        minify: true,
+        exclude: ["header.css"]
     }
 ]
 var pack;
 
-describe("Testing css packagement", function() {
+describe("Testing css packagement > ", function() {
     it("should have assetspack", function(done) {
         expect(AssetsPack).toBeDefined();
         done();
@@ -20,9 +23,9 @@ describe("Testing css packagement", function() {
         });
     })
     it("should compile the css", function(done) {
-        pack.onPack(function(asset) {
+        pack.onPack(function(file) {
             var fs = require('fs');
-            fs.exists(__dirname + "/../" + config[0].destination, function(exists) {
+            fs.exists(__dirname + "/../" + config[0].output, function(exists) {
               if (exists) {
                 done();
               }
@@ -34,5 +37,10 @@ describe("Testing css packagement", function() {
                 console.log(err);
             }
         }); 
-    })
+    });
+    it("should delete the file", function(done) {
+        fs.unlink(__dirname + "/../" + config[0].output, function() {
+            done();
+        });
+    });
 });
