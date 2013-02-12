@@ -20,8 +20,14 @@ or globally:
     npm install -g assetspack
 
 ## Usage
+The module's configuration works with json configuration. When it is used via the command like you should place your settings in *.json* file.
 
 ### Via the command line
+Create *assets.json* file and execute the following command in the same directory
+
+    assetspack
+
+If your configuration file is with another name or it is just in another directory use
 
     assetspack --config [path to json file]
 

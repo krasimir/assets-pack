@@ -1,6 +1,6 @@
 {
   "name": "assetspack",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "homepage": "https://github.com/krasimir/assets-pack",
   "description": "clever assets packagement",
   "main": "index.js",
