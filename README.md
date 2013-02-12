@@ -7,15 +7,16 @@ The module is meant to be used in development mode. I.e. it is not a tool that y
 ## Features
 
 - watches for changes
-- perform packing/compilation of css, less and javascript
+- perform packing/compilation of css, less, javascript or whatever you want
 - minify the output if necessary
+- exclude files
 - execute shell command after packing
 
 ## Installation
 
     npm install assetspack
 
-or
+or globally:
 
     npm install -g assetspack
 
@@ -31,8 +32,10 @@ or
     var config = [
         {
             type: "css",
-            source: "tests/data/css",
-            destination: "tests/packed/styles.css"
+            watch: ["css/src"],
+            output: "tests/packed/styles.css",
+            minify: true,
+            exclude: ["custom.css"]
         }
     ];
     var pack = new AssetsPack(config, function() {
@@ -40,46 +43,78 @@ or
     });
     pack.onPack(function() {
         console.log("AssetsPack did the job"); 
-    })
+    });
 
 ## Configuration
-
-The configuration is an array of objects. The object's properties are:
-
-- type /required/ - css, less or js
-- source /required/ - directory for watching
-- destination /required/ - file, which will contain the output of the packing (notice that there is no */* at the beginning of the path)
-- index /required/ /used only if type=less/ - your main less file
-- minify /optional/ - if set to true the the css/js code is minified
-- exclude /optional/ - array of files, which you don't want to be included (useful for css and javascript packing)
-- hook /optional/ - a shell command for execution after packing
-
-Example:
+The configuration should be a valid json file/object. An array of objects:
 
     [
-        {
-            "type": "css",
-            "source": "tests/data/css",
-            "destination": "tests/packed/styles.css"
-        },
-        {
-            "type": "js",
-            "source": "tests/data/js",
-            "destination": "tests/packed/myjslib.js",
-            "minify": true,
-            "exclude": ["B.js", "C.js"]
-        },
-        {
-            "type": "less",
-            "source": "tests/data/less/",
-            "index": "tests/data/less/index.less",
-            "destination": "tests/packed/styles.less.css"
-        }
+        (asset object),
+        (asset object),
+        (asset object),
+        ...
     ]
-    
-## TODO
 
-1. Avoid passing of *--config* parameter (default assetpack.json file in the directory)
-2. Allow packing any kind of files format
-3. Allow packing specific files
-4. Allow packing specific directories
+## Asset Object
+
+The basic structure of the asset object is:
+
+    {
+        type: (file type /string, could be css, js or less for example),
+        watch: (directory or directories for watching /string or array of strings/),
+        pack: (directory or directories for packing /string or array of strings/. ),
+        output: (path to output file /string/),
+        minify: /boolean/,
+        exclude: (array of file names)
+    }
+
+The *pack* property is not mandatory. If you miss it then its value is equal to *watch*. *minify* by defualt is false.
+
+Here are few examples:
+
+### Packing CSS
+
+    {
+        type: "css",
+        watch: ["tests/data/css", "tests/data/css2"],
+        pack: ["tests/data/css", "tests/data/css2"],
+        output: "tests/packed/styles.css",
+        minify: true,
+        exclude: ["header.css"]
+    }
+
+### Packing JavaScript
+
+    {
+        type: "js",
+        watch: "tests/data/js",
+        pack: ["tests/data/js"],
+        output: "tests/packed/scripts.js",
+        minify: true,
+        exclude: ["A.js"]
+    }
+
+### Packing less
+The packing of .less files is a little bit different. *pack* property is mandatory and it is basically your entry point. You should import all the others less files there. The *exclude*  is not available here. 
+
+    {
+        type: "less",
+        watch: ["tests/data/less"],
+        pack: "tests/data/less/index.less",
+        output: "tests/packed/styles-less.css",
+        minify: true
+    }
+
+If you find any problem, please check the *tests/packing-less.spec.js*.
+
+### Packing other file formats
+*assets-pack* works with any file format. For example we can combine html templates into a single file:
+
+    {
+        type: "html",
+        watch: ["tests/data/tpl"],
+        output: "tests/packed/template.html",
+        exclude: ["admin.html"]
+    }
+
+The only one thing that you should know here is that there is no minification.

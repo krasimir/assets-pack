@@ -1,0 +1,31 @@
+[
+    {
+        "type": "css",
+        "watch": ["data/css", "data/css2"],
+        "pack": ["data/css", "data/css2"],
+        "output": "packed/styles.css",
+        "minify": true,
+        "exclude": ["header.css"]
+    },
+    {
+        "type": "html",
+        "watch": ["data/tpl"],
+        "output": "packed/template.html",
+        "exclude": ["admin.html"]
+    },
+    {
+        "type": "js",
+        "watch": "data/js",
+        "pack": ["data/js"],
+        "output": "packed/scripts.js",
+        "minify": true,
+        "exclude": ["A.js"]
+    },
+    {
+        "type": "less",
+        "watch": ["data/less"],
+        "pack": "data/less/index.less",
+        "output": "packed/styles-less.css",
+        "minify": true
+    }
+]

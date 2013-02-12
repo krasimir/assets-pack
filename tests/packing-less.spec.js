@@ -3,14 +3,15 @@ var fs = require('fs');
 var config = [
     {
         type: "less",
-        source: "tests/data/less/",
-        index: "tests/data/less/index.less",
-        destination: "tests/packed/styles.less.css"
+        watch: ["tests/data/less"],
+        pack: "tests/data/less/index.less",
+        output: "tests/packed/styles-less.css",
+        minify: true
     }
 ]
 var pack;
 
-describe("Testing less packagement", function() {
+describe("Testing less packagement > ", function() {
     it("should have assetspack", function(done) {
         expect(AssetsPack).toBeDefined();
         done();
@@ -21,19 +22,24 @@ describe("Testing less packagement", function() {
         });
     })
     it("should compile the less", function(done) {
-        pack.onPack(function(asset) {
+        pack.onPack(function(file) {
             var fs = require('fs');
-            fs.exists(__dirname + "/../" + config[0].destination, function(exists) {
+            fs.exists(__dirname + "/../" + config[0].output, function(exists) {
               if (exists) {
                 done();
               }
             });
         });
         var fs = require('fs');
-        fs.appendFile(__dirname + "/data/less/addons/addon.less", " ", function(err) {
+        fs.appendFile(__dirname + "/data/less/addons/addon2.less", " ", function(err) {
             if(err) {
                 console.log(err);
             }
         }); 
-    })
+    });
+    it("should delete the file", function(done) {
+        fs.unlink(__dirname + "/../" + config[0].output, function() {
+            done();
+        });
+    });
 });

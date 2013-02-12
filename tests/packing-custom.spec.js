@@ -2,16 +2,15 @@ var AssetsPack = require("../index.js");
 var fs = require('fs');
 var config = [
     {
-        type: "less",
-        source: "tests/data/less/",
-        index: "tests/data/less/index.less",
-        destination: "tests/packed/styles.less.css",
-        minify: true
+        type: "html",
+        watch: ["tests/data/tpl"],
+        output: "tests/packed/template.html",
+        exclude: ["admin.html"]
     }
 ]
 var pack;
 
-describe("Testing less packagement", function() {
+describe("Testing custom packagement > ", function() {
     it("should have assetspack", function(done) {
         expect(AssetsPack).toBeDefined();
         done();
@@ -21,20 +20,25 @@ describe("Testing less packagement", function() {
             done();
         });
     })
-    it("should compile the less", function(done) {
-        pack.onPack(function(asset) {
+    it("should compile the custom", function(done) {
+        pack.onPack(function(file) {
             var fs = require('fs');
-            fs.exists(__dirname + "/../" + config[0].destination, function(exists) {
+            fs.exists(__dirname + "/../" + config[0].output, function(exists) {
               if (exists) {
                 done();
               }
             });
         });
         var fs = require('fs');
-        fs.appendFile(__dirname + "/data/less/addons/addon.less", " ", function(err) {
+        fs.appendFile(__dirname + "/data/tpl/admin.html", " ", function(err) {
             if(err) {
                 console.log(err);
             }
         }); 
-    })
+    });
+    it("should delete the file", function(done) {
+        fs.unlink(__dirname + "/../" + config[0].output, function() {
+            done();
+        });
+    });
 });

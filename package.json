@@ -1,18 +1,19 @@
 {
   "name": "assetspack",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "homepage": "https://github.com/krasimir/assets-pack",
   "description": "clever assets packagement",
   "main": "index.js",
   "author": "Krasimir Tsonev",
   "license": "BSD",
   "dependencies": { 
-    "watchr": "latest",
-    "optimist": "latest",
-    "less": "latest",
-    "shelljs": "latest",
-    "underscore": "latest",
-    "clean-css": "latest"
+    "watchr": "2.3.7",
+    "optimist": "0.3.5",
+    "less": "1.3.3",
+    "shelljs": "0.1.2",
+    "underscore": "1.4.4",
+    "clean-css": "0.10.0",
+    "uglify-js": "1.3.4"
   },
   "keywords": [
     "watching",

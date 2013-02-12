@@ -3,8 +3,11 @@ var fs = require('fs');
 var config = [
     {
         type: "js",
-        source: "tests/data/js/",
-        destination: "tests/packed/myjslib.js"
+        watch: "tests/data/js",
+        pack: ["tests/data/js"],
+        output: "tests/packed/scripts.js",
+        minify: true,
+        exclude: ["A.js"]
     }
 ]
 var pack;
@@ -22,7 +25,7 @@ describe("Testing javascript packagement", function() {
     it("should compile the javascript", function(done) {
         pack.onPack(function(asset) {
             var fs = require('fs');
-            fs.exists(__dirname + "/../" + config[0].destination, function(exists) {
+            fs.exists(__dirname + "/../" + config[0].output, function(exists) {
               if (exists) {
                 done();
               }
@@ -34,5 +37,10 @@ describe("Testing javascript packagement", function() {
                 console.log(err);
             }
         }); 
-    })
+    });
+    it("should delete the file", function(done) {
+        fs.unlink(__dirname + "/../" + config[0].output, function() {
+            done();
+        });
+    });
 });
