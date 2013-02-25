@@ -1,5 +1,5 @@
 var A = {
-    method: function() {
+    method: function() {        
         return 10;
     }
 }
