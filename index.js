@@ -6,6 +6,10 @@ var fs = require("fs");
 
 require('shelljs/global');
 
+process.on('uncaughtException', function (err) {
+    console.log("Error packing", err);
+});
+
 module.exports = function(config, onReadyCallback, onPackCallback) {
 
     var self = this;
